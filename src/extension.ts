@@ -11,6 +11,8 @@ import * as os from 'os';
 // 拡張機能は、コマンドが初めて実行されたときにアクティブ化されます。
 export function activate(context: vscode.ExtensionContext) {
 
+	const is_windows = process.platform==='win32'
+
 	// 「TrainingJavaTool.RunCode」で実行される処理
 	let disposable = vscode.commands.registerCommand('JavaSelectedCodeExecutor.RunCode', function () {
 		
@@ -67,11 +69,17 @@ export function activate(context: vscode.ExtensionContext) {
 		text = text + '    return Short.parseShort(input()); ' + os.EOL;
 		text = text + '} ' + os.EOL;
 		
+		text = text + 'println("[Java Selected Code Executor]コードの実行を開始します。");' + os.EOL;
+				text = text + 'println("[Java Selected Code Executor]------------------コードの実行結果------------------");' + os.EOL;
 		if(cur_selection.isEmpty){
 			text = text + vscode.window.activeTextEditor.document.getText() + os.EOL;
 		}else{
 			text = text + vscode.window.activeTextEditor.document.getText(cur_selection) + os.EOL;
 		}
+		text = text + 'println("[Java Selected Code Executor]----------------------------------------------------");' + os.EOL;
+		text = text + 'println("[Java Selected Code Executor]コードの実行が完了しました。");' + os.EOL;
+		text = text + 'println("[Java Selected Code Executor]Enterキーを押して終了します。");' + os.EOL;
+		text = text + 'input();' + os.EOL;
 		text = text + '/ex' + os.EOL;
 		
 		
@@ -81,38 +89,39 @@ export function activate(context: vscode.ExtensionContext) {
 		// 一時ファイルに出力（出力後にJshellで実行）
 		fs.writeFile(temp_jshell_file, text, (err) =>{
 		
+			let terminalType = '';
+			let jdkType = '';
+			let jshell = '';
+			if(is_windows){
+				terminalType = 'cmd.exe';
+				jdkType = 'jdk-11_win';
+				jshell = 'jshell.exe';
+			} else {
+				terminalType = 'bash';
+				jdkType = 'jdk-11_linux';
+				jshell = 'jshell';
+			}
+		
 			// JavaHomeのパス
 			let javaHomePath = vscode.workspace.getConfiguration('JavaSelectedCodeExecutor').get('java_home', '');
 			if(javaHomePath == '' ){
 				vscode.window.showInformationMessage('内部的に保持しているJavaで動作します。');
-				javaHomePath = path.join(__dirname, 'jdk-11');
+				javaHomePath = path.join(os.tmpdir(), jdkType);
+				if (!fs.existsSync(javaHomePath)){
+					let fsex = require('fs-extra');
+					fsex.copySync(path.join(__dirname, jdkType), javaHomePath );
+					chmodFolder(javaHomePath, '755');
+				}
 			}
 			
 			// Jshellのパス
-			let jshellCommand = path.join(javaHomePath, 'bin', 'jshell.exe');
+			let jshellCommand = path.join(javaHomePath, 'bin', jshell);
 			
 			// ターミナル上で実行
-			let temp_bat_file = path.join(os.tmpdir(), 'vscode-extension-temp' + Math.random().toString(36).slice(-8) + '.bat');
-			let bat_text = ''; 
-			bat_text = bat_text + '@echo off' + os.EOL;
-			bat_text = bat_text + '"' + jshellCommand + '"' + ' ' + '-J-Dfile.encoding=utf8 --execution local' +' ' + '"' + temp_jshell_file + '"' + os.EOL;
-			bat_text = bat_text + 'echo.' + os.EOL;
-			bat_text = bat_text + 'echo.' + os.EOL;
-			bat_text = bat_text + 'echo 実行が完了しました。' + os.EOL;
-			bat_text = bat_text + 'echo 終了するには何かキーを押してください . . . ' + os.EOL;
-			bat_text = bat_text + 'pause > NUL' + os.EOL;
-			bat_text = bat_text + 'exit' + os.EOL;
+			let terminal = vscode.window.createTerminal('jshell実行', terminalType);
+			terminal.sendText(jshellCommand + ' ' + '-J-Dfile.encoding=utf8 --execution local' + ' ' + temp_jshell_file + ' && exit' );
+			terminal.show();
 			
-			fs.writeFileSync(temp_bat_file , '');
-			let fd = fs.openSync(temp_bat_file, 'w');
-			let iconv = require('iconv-lite');
-			let buf = iconv.encode(bat_text, 'Shift_JIS');
-			fs.write(fd, buf, 0, buf.length , function(err, written, buffer){
-				if(err) throw err;
-				let executCommand = '"' + temp_bat_file + '"';
-				let terminal = vscode.window.createTerminal('jshell実行', 'cmd.exe', '/c ' + '"' + executCommand + '"');
-				terminal.show();
-			});
 		});
 	});
 	
@@ -121,4 +130,21 @@ export function activate(context: vscode.ExtensionContext) {
 
 // このメソッドは、拡張機能が非アクティブ化されたときに呼び出されます。
 export function deactivate() {}
+
+// フォルダのパーミッションを変更します。
+function chmodFolder(dirPath: string, mode: string) {
+	let fsex = require('fs-extra');
+	const items = fs.readdirSync(dirPath);
+	for (const item of items) {
+		const target = path.join(dirPath, item);
+		if (fs.lstatSync(target).isDirectory()) {
+			chmodFolder(target, mode)
+		} else {
+			fsex.chmod(target, mode);
+		}
+	}
+	fsex.chmod(dirPath, mode);
+}
+
+
 

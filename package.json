@@ -2,7 +2,7 @@
 	"name": "JavaSelectedCodeExecutor",
 	"displayName": "Java Selected Code Executor",
 	"description": "Runs the Java source before it becomes a complete class definition.",
-	"publisher": "カチシステム新人研修",
+	"publisher": "KachiSystem-kensyu",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.83.0"
@@ -17,12 +17,12 @@
 			{
 				"when": "resourceLangId == Java",
 				"command": "JavaSelectedCodeExecutor.RunCode",
-				"title": "run code (カチシステム新人研修用ツール：選択した範囲のJavaコードを実行)"
+				"title": "run code (KachiSystem-kensyu：選択した範囲のJavaコードを実行)"
 			}
 		],
 		"configuration": {
 			"type": "object",
-			"title": "カチシステム新人研修.JavaSelectedCodeExecutor",
+			"title": "KachiSystem-kensyu.JavaSelectedCodeExecutor",
 			"properties": {
 				"JavaSelectedCodeExecutor.java_home": {
 					"type": "string",
@@ -80,6 +80,7 @@
 		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
+		"fs-extra": "^11.1.1",
 		"iconv-lite": "^0.6.3"
 	}
 }
