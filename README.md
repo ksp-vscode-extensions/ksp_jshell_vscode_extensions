@@ -22,7 +22,7 @@ JavaSEから提供されるAPIを十分に使用したい場合は動作に利�
 
 変更を行う場合はVScodeの設定画面を開いて下記の通り設定を行ってください。
 
-* 設定箇所：拡張機能 >> カチシステム新人研修.JavaSelectedCodeExecutor >> Java_home
+* 設定箇所：拡張機能 >> KachiSystem-kensyu.JavaSelectedCodeExecutor >> Java_home
 
 * 設定値：＜Javaのインストールディレクトリ＞
 
