@@ -1,6 +1,6 @@
-# 【カチシステム新人研修】Java Selected Code Executor
+# Java Selected Code Executor
 
-カチシステムプロダクツの新人研修で利用するJavaコードの選択実行ツールです。
+新人研修で利用するJavaコードの選択実行ツールです。
 
 Java 9で提供されるJshellを利用して選択した範囲の不完全なJavaコードを実行する事ができます。
 
@@ -34,7 +34,11 @@ JavaSEから提供されるAPIを十分に使用したい場合は動作に利�
 
 * Java言語のファイルを開いて実行
 
+![Test Image 1](dist/extension_all.png)
+
 * 実行したい箇所を選択して実行
+
+![](dist/extension_selected.png)
 
 ## ■利用出来るメソッド
 

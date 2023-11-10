@@ -2,7 +2,7 @@
 	"name": "JavaSelectedCodeExecutor",
 	"displayName": "Java Selected Code Executor",
 	"description": "Runs the Java source before it becomes a complete class definition.",
-	"publisher": "KachiSystem-kensyu",
+	"publisher": "kensyu",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.83.0"
@@ -17,12 +17,12 @@
 			{
 				"when": "resourceLangId == Java",
 				"command": "JavaSelectedCodeExecutor.RunCode",
-				"title": "run code (KachiSystem-kensyu：選択した範囲のJavaコードを実行)"
+				"title": "run code (kensyu：選択した範囲のJavaコードを実行)"
 			}
 		],
 		"configuration": {
 			"type": "object",
-			"title": "KachiSystem-kensyu.JavaSelectedCodeExecutor",
+			"title": "kensyu.JavaSelectedCodeExecutor",
 			"properties": {
 				"JavaSelectedCodeExecutor.java_home": {
 					"type": "string",
