@@ -2,7 +2,7 @@
 	"name": "JavaSelectedCodeExecutor",
 	"displayName": "Java Selected Code Executor",
 	"description": "Runs the Java source before it becomes a complete class definition.",
-	"publisher": "ksp",
+	"publisher": "ksp-kitam",
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
@@ -21,12 +21,12 @@
 			{
 				"when": "resourceLangId == Java",
 				"command": "JavaSelectedCodeExecutor.RunCode",
-				"title": "run code (kensyu：選択した範囲のJavaコードを実行)"
+				"title": "run code (選択した範囲のJavaコードを実行)"
 			}
 		],
 		"configuration": {
 			"type": "object",
-			"title": "ksp.JavaSelectedCodeExecutor",
+			"title": "ksp-kitam.JavaSelectedCodeExecutor",
 			"properties": {
 				"JavaSelectedCodeExecutor.java_home": {
 					"type": "string",
