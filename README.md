@@ -1,7 +1,5 @@
 # Java Selected Code Executor
 
-新人研修で利用するJavaコードの選択実行ツールです。
-
 Java 9で提供されるJshellを利用して選択した範囲の不完全なJavaコードを実行する事ができます。
 
 ## ■設定
@@ -34,7 +32,7 @@ JavaSEから提供されるAPIを十分に使用したい場合は動作に利�
 
 * Java言語のファイルを開いて実行
 
-![Test Image 1](dist/extension_all.png)
+![](dist/extension_all.png)
 
 * 実行したい箇所を選択して実行
 

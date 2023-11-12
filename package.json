@@ -2,8 +2,12 @@
 	"name": "JavaSelectedCodeExecutor",
 	"displayName": "Java Selected Code Executor",
 	"description": "Runs the Java source before it becomes a complete class definition.",
-	"publisher": "kensyu",
+	"publisher": "ksp",
 	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ksp-vscode-extensions/ksp_jshell_vscode_extensions"
+	},
 	"engines": {
 		"vscode": "^1.83.0"
 	},
@@ -22,7 +26,7 @@
 		],
 		"configuration": {
 			"type": "object",
-			"title": "kensyu.JavaSelectedCodeExecutor",
+			"title": "ksp.JavaSelectedCodeExecutor",
 			"properties": {
 				"JavaSelectedCodeExecutor.java_home": {
 					"type": "string",
