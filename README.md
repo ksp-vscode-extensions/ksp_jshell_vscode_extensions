@@ -31,11 +31,9 @@ JavaSEから提供されるAPIを十分に使用したい場合は動作に利�
 ## ■使い方
 
 * Java言語のファイルを開いて実行
-
 ![](dist/extension_all.png)
 
 * 実行したい箇所を選択して実行
-
 ![](dist/extension_selected.png)
 
 ## ■利用出来るメソッド
